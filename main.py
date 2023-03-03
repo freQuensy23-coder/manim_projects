@@ -21,6 +21,22 @@ class CreateCircle(Scene):
         self.play(Create(square, run_time=2))
         lambda_text = Tex(r"$\lambda$")
         self.add(lambda_text)
-        dip = dipole(2, 2, 0.1, 0.75)
+        dip_params = x, y, r, d = 2, 2, 0.1, 0.55
+        dip = dipole(*dip_params)
         self.play(ShowIncreasingSubsets(dip))
         self.wait(2)
+
+        square_with_text = VGroup(square, lambda_text)
+        self.play(square_with_text.animate.shift(LEFT*d))
+        self.play(square_with_text.animate.shift(RIGHT * d))
+        self.play(square_with_text.animate.shift(LEFT * d))
+        self.play(square_with_text.animate.shift(RIGHT * d))
+
+        blue_square = Rectangle(color=BLUE, height=square.height, width=square.width - d)
+        blue_square.set_fill(opacity=0.6)
+        minus_lambda_text = Tex(r"$ - \lambda$", color=BLUE)
+        self.add(minus_lambda_text)
+        self.play(FadeIn(blue_square))
+        self.wait(4)
+
+
